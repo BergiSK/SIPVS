@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        xmlns:sipvs="http://www.example.org/sipvs"
+        targetNamespace="http://www.example.org/sipvs"
+        elementFormDefault="qualified">
+
+    <element name="user" type="sipvs:User"></element>
+
+    <complexType name="User">
+        <sequence>
+            <element name="firstname" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="lastname" type="string" />
+        </sequence>
+    </complexType>
+
+
+</schema>
