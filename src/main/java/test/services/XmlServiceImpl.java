@@ -1,7 +1,7 @@
 package test.services;
 
 import org.example.sipvs.ObjectFactory;
-import org.example.sipvs.User;
+import org.example.sipvs.Team;
 import org.springframework.stereotype.Service;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -16,22 +16,21 @@ import java.io.File;
 public class XmlServiceImpl implements XmlService {
 
     @Override
-    public void saveXml(User user) {
+    public void saveXml(Team team) {
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance("org.example.sipvs",
                     org.example.sipvs.ObjectFactory.class.getClassLoader());
             Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
             ObjectFactory factory = new ObjectFactory();
-            JAXBElement<User> jaxbUser = factory.createUser(user);
-            jaxbMarshaller.marshal(jaxbUser, System.out);
-            System.out.println();
+            JAXBElement<Team> jaxbTeam = factory.createTeam(team);
+            jaxbMarshaller.marshal(jaxbTeam, new File("c:/tempXml.xml"));
         } catch (JAXBException e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void validateXml(User user) throws MarshalException {
+    public boolean isXmlValid(Team team) {
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance("org.example.sipvs",
                     ObjectFactory.class.getClassLoader());
@@ -41,14 +40,15 @@ public class XmlServiceImpl implements XmlService {
             Marshaller marshaller = jaxbContext.createMarshaller();
             marshaller.setSchema(schema);
             ObjectFactory factory = new ObjectFactory();
-            JAXBElement<User> jaxbUser = factory.createUser(user);
-            marshaller.marshal(jaxbUser, new DefaultHandler());
+            JAXBElement<Team> jaxbTeam = factory.createTeam(team);
+            marshaller.marshal(jaxbTeam, new DefaultHandler());
 
         } catch (MarshalException e) {
-            throw e;
+            System.out.print(e);
+            return false;
         } catch (JAXBException | SAXException  e) {
             e.printStackTrace();
         }
-
+        return true;
     }
 }

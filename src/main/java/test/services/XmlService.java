@@ -1,13 +1,13 @@
 package test.services;
 
-import org.example.sipvs.User;
+import org.example.sipvs.Team;
 
 import javax.xml.bind.MarshalException;
 
 public interface XmlService {
 
-    void saveXml(User user);
+    void saveXml(Team team);
 
-    void validateXml(User user) throws MarshalException;
+    boolean isXmlValid(Team team) throws MarshalException;
 
 }

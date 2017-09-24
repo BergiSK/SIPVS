@@ -4,14 +4,34 @@
         targetNamespace="http://www.example.org/sipvs"
         elementFormDefault="qualified">
 
-    <element name="user" type="sipvs:User"></element>
+    <element name="team" type="sipvs:Team"></element>
 
     <complexType name="User">
         <sequence>
-            <element name="firstname" type="string" minOccurs="0" maxOccurs="1" />
-            <element name="lastname" type="string" />
+            <element name="firstName" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="lastName" type="string" />
+            <element name="age" type="integer" />
+            <element name="mail" type="string" />
         </sequence>
     </complexType>
+
+    <complexType name="Team">
+        <group ref="sipvs:TeamGroup"/>
+        <attribute name="shortcut" type="string" use="required" />
+    </complexType>
+
+    <group name="TeamGroup">
+        <sequence>
+            <element name="user" type="sipvs:User" />
+            <element name="name" type="string" />
+            <element name="vip" type="boolean" />
+            <sequence minOccurs="3" maxOccurs="3">
+                <element name="player" type="string"/>
+            </sequence>
+        </sequence>
+    </group>
+
+
 
 
 </schema>

@@ -3,13 +3,87 @@
 <head>
     <title>Getting Started: Handling Form Submission</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel = "stylesheet"
+          href = "https://fonts.googleapis.com/icon?family=Material+Icons"></link>
+    <link rel = "stylesheet"
+          href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css"></link>
+    <script type = "text/javascript"
+            src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js">
+    </script>
+    <style>
+        [type="checkbox"]:not(:checked), [type="checkbox"]:checked{
+            left: 30px;
+            top: 34px;
+            visibility: visible;
+         }
+    </style>
+    <!--<link rel="stylesheet" type="tstatic/css" hrstatic"css/stystatic.css"></link>-->
 </head>
 <body>
-<h1>Form</h1>
-<form action="#" th:action="@{/form}" th:object="${user}" method="post">
-    <p>Firstname: <input type="text" th:field="*{firstname}" /></p>
-    <p>Lastname: <input type="text" th:field="*{lastname}" /></p>
-    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
-</form>
+<div class="row">
+    <h3>Registrácia na turnaj</h3>
+    <form class="col s12" action="#" th:action="@{/form}" th:object="${team}" method="post">
+        <h5>Tím</h5>
+        <div class="row">
+            <!--Tim-->
+            <div class="input-field col s6">
+                <input  th:field="*{name}" id="team" type="text" class="validate"></input>
+                <label for="team">Meno tímu</label>
+            </div>
+            <div class="input-field col s6">
+                <input  th:field="*{shortcut}" id="shortcut" type="text" class="validate"></input>
+                <label for="shortcut">Skratka tímu</label>
+            </div>
+            <!--Players-->
+            <div class="input-field col s6">
+                <input  th:field="*{player[0]}"  id="player1" type="text" class="validate"></input>
+                <label for="shortcut">Hráč 1</label>
+            </div>
+            <div class="input-field col s6">
+                <input  th:field="*{player[1]}"  id="player2" type="text" class="validate"></input>
+                <label for="shortcut">Hráč 2</label>
+            </div>
+            <div class="input-field col s6">
+                <input  th:field="*{player[2]}"  id="player3" type="text" class="validate"></input>
+                <label for="shortcut">Hráč 3</label>
+            </div>
+            <div class="input-field col s6">
+                <label for="vip">VIP room</label>
+                <input  th:field="*{vip}" id="vip" name="vip" type="checkbox" checked="checked"></input>
+            </div>
+        </div>
+        <hr></hr>
+        <!--Contact-->
+        <h5>Kontaktné údaje</h5>
+        <div class="row">
+            <div class="input-field col s6">
+                <input  th:field="*{user.firstName}" id="firstName" type="text" class="validate"></input>
+                <label for="firstName">Meno</label>
+            </div>
+
+            <div class="input-field col s6">
+                <input th:field="*{user.lastName}" id="lastName" type="text" class="validate"></input>
+                <label for="lastName">Priezvisko</label>
+            </div>
+
+            <div class="input-field col s6">
+                <input type="text" th:field="*{user.age}" id="age"></input>
+                <label for="age">vek</label>
+            </div>
+            <div class="input-field col s6">
+                <input th:field="*{user.mail}" id="mail" type="text" class="validate" ></input>
+                <label for="mail">e-mail</label>
+            </div>
+        </div>
+        <button type="submit" >Ulož</button>
+        <button type="submit" name="action" value="validate">Validuj</button>
+        <button type="submit" name="action" value="show">Zobraz</button>
+    </form>
+    <div th:switch="${valid}">
+        <p th:case="true">Validne</p>
+        <p th:case="false">Nevalidne</p>
+    </div>
+</div>
 </body>
 </html>
