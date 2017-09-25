@@ -30,7 +30,6 @@ public class FormController {
 
     @PostMapping("/form")
     public String formSubmit(@ModelAttribute Team team) throws MarshalException {
-//        xmlService.isXmlValid(team);
         xmlService.saveXml(team);
         return "result";
     }
