@@ -11,14 +11,8 @@
             src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js">
     </script>
-    <style>
-        [type="checkbox"]:not(:checked), [type="checkbox"]:checked{
-            left: 30px;
-            top: 34px;
-            visibility: visible;
-         }
-    </style>
-    <!--<link rel="stylesheet" type="tstatic/css" hrstatic"css/stystatic.css"></link>-->
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/styles.css}" />
+    <script th:src="@{/validations.js}"></script>
 </head>
 <body>
 <div class="row">
@@ -28,24 +22,24 @@
         <div class="row">
             <!--Tim-->
             <div class="input-field col s6">
-                <input  th:field="*{name}" id="team" type="text" class="validate"></input>
+                <input  th:field="*{name}" id="team" type="text"></input>
                 <label for="team">Meno tímu</label>
             </div>
             <div class="input-field col s6">
-                <input  th:field="*{shortcut}" id="shortcut" type="text" class="validate"></input>
+                <input  th:field="*{shortcut}" id="shortcut" type="text"></input>
                 <label for="shortcut">Skratka tímu</label>
             </div>
             <!--Players-->
             <div class="input-field col s6">
-                <input  th:field="*{player[0]}"  id="player1" type="text" class="validate"></input>
+                <input  th:field="*{player[0]}"  id="player1" type="text"></input>
                 <label for="shortcut">Hráč 1</label>
             </div>
             <div class="input-field col s6">
-                <input  th:field="*{player[1]}"  id="player2" type="text" class="validate"></input>
+                <input  th:field="*{player[1]}"  id="player2" type="text"></input>
                 <label for="shortcut">Hráč 2</label>
             </div>
             <div class="input-field col s6">
-                <input  th:field="*{player[2]}"  id="player3" type="text" class="validate"></input>
+                <input  th:field="*{player[2]}"  id="player3" type="text"></input>
                 <label for="shortcut">Hráč 3</label>
             </div>
             <div class="input-field col s6">
@@ -58,12 +52,12 @@
         <h5>Kontaktné údaje</h5>
         <div class="row">
             <div class="input-field col s6">
-                <input  th:field="*{user.firstName}" id="firstName" type="text" class="validate"></input>
+                <input  th:field="*{user.firstName}" id="firstName" type="text"></input>
                 <label for="firstName">Meno</label>
             </div>
 
             <div class="input-field col s6">
-                <input th:field="*{user.lastName}" id="lastName" type="text" class="validate"></input>
+                <input th:field="*{user.lastName}" id="lastName" type="text"></input>
                 <label for="lastName">Priezvisko</label>
             </div>
 
@@ -72,7 +66,7 @@
                 <label for="age">vek</label>
             </div>
             <div class="input-field col s6">
-                <input th:field="*{user.mail}" id="mail" type="text" class="validate" ></input>
+                <input th:field="*{user.mail}" id="mail" type="email" class="validate" ></input>
                 <label for="mail">e-mail</label>
             </div>
         </div>
@@ -80,9 +74,13 @@
         <button type="submit" name="action" value="validate">Validuj</button>
         <button type="submit" name="action" value="show">Zobraz</button>
     </form>
-    <div th:switch="${valid}">
-        <p th:case="true">Validne</p>
-        <p th:case="false">Nevalidne</p>
+    <div th:switch="${validationResult}" class="validationSection">
+        <div th:case="Valid">
+            <div class="messageBox">Validne</div>
+        </div>
+        <div th:case="*">
+            <div th:text="${validationResult}" class="messageBox"/>
+        </div>
     </div>
 </div>
 </body>

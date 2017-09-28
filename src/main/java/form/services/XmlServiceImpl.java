@@ -1,4 +1,4 @@
-package test.services;
+package form.services;
 
 import org.example.sipvs.ObjectFactory;
 import org.example.sipvs.Team;
@@ -10,27 +10,43 @@ import javax.xml.XMLConstants;
 import javax.xml.bind.*;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
-import java.io.File;
+import java.io.*;
 
 @Service
 public class XmlServiceImpl implements XmlService {
 
+    private static final String VALID = "Valid";
+
     @Override
-    public void saveXml(Team team) {
+    public ByteArrayOutputStream getXmlStream(Team team) {
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance("org.example.sipvs",
                     org.example.sipvs.ObjectFactory.class.getClassLoader());
             Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
             ObjectFactory factory = new ObjectFactory();
             JAXBElement<Team> jaxbTeam = factory.createTeam(team);
-            jaxbMarshaller.marshal(jaxbTeam, new File("c:/tempXml.xml"));
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            jaxbMarshaller.marshal(jaxbTeam, stream);
+            return stream;
         } catch (JAXBException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public void saveXml(Team team) {
+        ByteArrayOutputStream xmlStream = this.getXmlStream(team);
+
+        try(OutputStream outputStream = new FileOutputStream("c:/tempXml.xml")) {
+            xmlStream.writeTo(outputStream);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public boolean isXmlValid(Team team) {
+    public String isXmlValid(Team team) {
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance("org.example.sipvs",
                     ObjectFactory.class.getClassLoader());
@@ -45,10 +61,10 @@ public class XmlServiceImpl implements XmlService {
 
         } catch (MarshalException e) {
             System.out.print(e);
-            return false;
+            return e.getCause().getMessage().split(": ")[1];
         } catch (JAXBException | SAXException  e) {
             e.printStackTrace();
         }
-        return true;
+        return VALID;
     }
 }

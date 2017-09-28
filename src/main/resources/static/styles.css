@@ -1,6 +1,5 @@
 [type="checkbox"]:not(:checked), [type="checkbox"]:checked{
-    position:relative !important;
-}
-h3{
-    color: red;
+    left: 30px;
+    top: 34px;
+    visibility: visible;
 }
