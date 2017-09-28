@@ -38,9 +38,10 @@ public class FormController {
     }
 
     @PostMapping("/form")
-    public String formSubmit(@ModelAttribute Team team) throws MarshalException {
+    public String formSubmit(@ModelAttribute Team team, Model model) throws MarshalException {
         xmlService.saveXml(team);
-        return "result";
+        model.addAttribute("saveResult", "XML successfully saved!");
+        return "/form";
     }
 
     @RequestMapping(value="/form", method=RequestMethod.POST, params="action=validate")

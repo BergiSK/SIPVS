@@ -3,3 +3,40 @@
     top: 34px;
     visibility: visible;
 }
+.left{
+    flaot: left;
+}
+.center{
+    text-align: center;
+}
+
+.body{
+    width: 60%;
+    margin: auto;
+    padding: 20px;
+    margin-bottom: 50px;
+    margin-top: 50px;
+}
+
+.validation-result{
+    padding: 20px;
+    margin: 20px;
+}
+
+.icon{
+    padding: 10px !important;
+}
+
+.back{
+    margin-bottom: 0px;
+    margin-top: 20px;
+}
+
+.label{
+ font-weight: bold;
+ padding-right: 10px;
+ font-size: 1.2rem;
+}
+.value{
+    font-size: 1.2rem
+}

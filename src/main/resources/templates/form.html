@@ -7,81 +7,102 @@
           href = "https://fonts.googleapis.com/icon?family=Material+Icons"></link>
     <link rel = "stylesheet"
           href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css"></link>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
     <script type = "text/javascript"
             src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js">
     </script>
-    <link rel="stylesheet" type="text/css" media="all" th:href="@{/styles.css}" />
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/styles.css}" />
     <script th:src="@{/validations.js}"></script>
 </head>
 <body>
-<div class="row">
-    <h3>Registrácia na turnaj</h3>
-    <form class="col s12" action="#" th:action="@{/form}" th:object="${team}" method="post">
-        <h5>Tím</h5>
-        <div class="row">
-            <!--Tim-->
-            <div class="input-field col s6">
-                <input  th:field="*{name}" id="team" type="text"></input>
-                <label for="team">Meno tímu</label>
+    <div class="row body grey lighten-2">
+        <h3 class="center" >Registrácia na turnaj</h3>
+        <form class="col s12" action="#" th:action="@{/form}" th:object="${team}" method="post">
+            <h5>Team</h5>
+            <div class="row">
+                <!--Tim-->
+                <div class="input-field col s6">
+                    <input  th:field="*{name}" id="team" type="text"></input>
+                    <label for="team">Team Name</label>
+                </div>
+                <div class="input-field col s6">
+                    <input  th:field="*{shortcut}" id="shortcut" type="text"></input>
+                    <label for="shortcut">Shortcut</label>
+                </div>
+                <!--Players-->
+                <div class="input-field col s6">
+                    <input  th:field="*{player[0]}"  id="player1" type="text"></input>
+                    <label for="shortcut">Player 1</label>
+                </div>
+                <div class="input-field col s6">
+                    <input  th:field="*{player[1]}"  id="player2" type="text"></input>
+                    <label for="shortcut">Player 2</label>
+                </div>
+                <div class="input-field col s6">
+                    <input  th:field="*{player[2]}"  id="player3" type="text"></input>
+                    <label for="shortcut">Player 3</label>
+                </div>
+                <div class="input-field col s6">
+                    <label for="vip">VIP room</label>
+                    <input  th:field="*{vip}" id="vip" name="vip" type="checkbox" checked="checked"></input>
+                </div>
             </div>
-            <div class="input-field col s6">
-                <input  th:field="*{shortcut}" id="shortcut" type="text"></input>
-                <label for="shortcut">Skratka tímu</label>
+            <hr></hr>
+            <!--Contact-->
+            <h5>Contact</h5>
+            <div class="row">
+                <div class="input-field col s6">
+                    <input  th:field="*{user.firstName}" id="firstName" type="text"></input>
+                    <label for="firstName">Name</label>
+                </div>
+
+                <div class="input-field col s6">
+                    <input th:field="*{user.lastName}" id="lastName" type="text"></input>
+                    <label for="lastName">Surname</label>
+                </div>
+
+                <div class="input-field col s6">
+                    <input type="text" th:field="*{user.age}" id="age"></input>
+                    <label for="age">Age</label>
+                </div>
+                <div class="input-field col s6">
+                    <input th:field="*{user.mail}" id="mail" type="email" class="validate" ></input>
+                    <label for="mail">e-mail</label>
+                </div>
             </div>
-            <!--Players-->
-            <div class="input-field col s6">
-                <input  th:field="*{player[0]}"  id="player1" type="text"></input>
-                <label for="shortcut">Hráč 1</label>
+            <button type="submit">Ulož</button>
+            <button type="submit" name="action" value="validate">Validuj</button>
+            <button type="submit" name="action" value="show">Zobraz</button>
+        </form>
+        <div class="row validationSection" th:switch="${validationResult}">
+
+            <div th:case="Valid">
+                <div class="col s12  green darken-1 validation-result">
+                    <div class="left icon col s1">
+                        <i class="material-icons">check</i>
+                    </div>
+                    <div class="icon messageBox col s11" th:text="${validationResult}"/>
+                </div>
             </div>
-            <div class="input-field col s6">
-                <input  th:field="*{player[1]}"  id="player2" type="text"></input>
-                <label for="shortcut">Hráč 2</label>
-            </div>
-            <div class="input-field col s6">
-                <input  th:field="*{player[2]}"  id="player3" type="text"></input>
-                <label for="shortcut">Hráč 3</label>
-            </div>
-            <div class="input-field col s6">
-                <label for="vip">VIP room</label>
-                <input  th:field="*{vip}" id="vip" name="vip" type="checkbox" checked="checked"></input>
-            </div>
-        </div>
-        <hr></hr>
-        <!--Contact-->
-        <h5>Kontaktné údaje</h5>
-        <div class="row">
-            <div class="input-field col s6">
-                <input  th:field="*{user.firstName}" id="firstName" type="text"></input>
-                <label for="firstName">Meno</label>
+            <div th:case="*">
+                <div th:if="${validationResult != null}" class="col s12  red darken-1 validation-result">
+                    <div class="left icon col s1">
+                        <i class="material-icons">error</i>
+                    </div>
+                    <div th:text="${validationResult}" class="icon messageBox left col s11"/>
+                </div>
             </div>
 
-            <div class="input-field col s6">
-                <input th:field="*{user.lastName}" id="lastName" type="text"></input>
-                <label for="lastName">Priezvisko</label>
+            <div th:if="${saveResult != null}" class="col s12  green darken-1 validation-result">
+                <div class="left icon col s1">
+                    <i class="material-icons">check</i>
+                </div>
+                <div class="icon messageBox col s11" th:text="${saveResult}"/>
             </div>
+        </div>
 
-            <div class="input-field col s6">
-                <input type="text" th:field="*{user.age}" id="age"></input>
-                <label for="age">vek</label>
-            </div>
-            <div class="input-field col s6">
-                <input th:field="*{user.mail}" id="mail" type="email" class="validate" ></input>
-                <label for="mail">e-mail</label>
-            </div>
-        </div>
-        <button type="submit" >Ulož</button>
-        <button type="submit" name="action" value="validate">Validuj</button>
-        <button type="submit" name="action" value="show">Zobraz</button>
-    </form>
-    <div th:switch="${validationResult}" class="validationSection">
-        <div th:case="Valid">
-            <div class="messageBox">Validne</div>
-        </div>
-        <div th:case="*">
-            <div th:text="${validationResult}" class="messageBox"/>
-        </div>
+
     </div>
-</div>
 </body>
 </html>
