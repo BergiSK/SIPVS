@@ -10,7 +10,6 @@ import org.springframework.web.servlet.view.xslt.XsltView;
 import org.springframework.web.servlet.view.xslt.XsltViewResolver;
 
 @Configuration
-@EnableWebMvc
 public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
     private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
