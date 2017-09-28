@@ -1,7 +1,7 @@
-package test.services;
+package form.services;
 
 import org.example.sipvs.ObjectFactory;
-import org.example.sipvs.User;
+import org.example.sipvs.Team;
 import org.springframework.stereotype.Service;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -10,28 +10,43 @@ import javax.xml.XMLConstants;
 import javax.xml.bind.*;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
-import java.io.File;
+import java.io.*;
 
 @Service
 public class XmlServiceImpl implements XmlService {
 
+    private static final String VALID = "Valid";
+
     @Override
-    public void saveXml(User user) {
+    public ByteArrayOutputStream getXmlStream(Team team) {
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance("org.example.sipvs",
                     org.example.sipvs.ObjectFactory.class.getClassLoader());
             Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
             ObjectFactory factory = new ObjectFactory();
-            JAXBElement<User> jaxbUser = factory.createUser(user);
-            jaxbMarshaller.marshal(jaxbUser, System.out);
-            System.out.println();
+            JAXBElement<Team> jaxbTeam = factory.createTeam(team);
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            jaxbMarshaller.marshal(jaxbTeam, stream);
+            return stream;
         } catch (JAXBException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public void saveXml(Team team) {
+        ByteArrayOutputStream xmlStream = this.getXmlStream(team);
+
+        try(OutputStream outputStream = new FileOutputStream("c:/tempXml.xml")) {
+            xmlStream.writeTo(outputStream);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void validateXml(User user) throws MarshalException {
+    public String isXmlValid(Team team) {
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance("org.example.sipvs",
                     ObjectFactory.class.getClassLoader());
@@ -41,14 +56,15 @@ public class XmlServiceImpl implements XmlService {
             Marshaller marshaller = jaxbContext.createMarshaller();
             marshaller.setSchema(schema);
             ObjectFactory factory = new ObjectFactory();
-            JAXBElement<User> jaxbUser = factory.createUser(user);
-            marshaller.marshal(jaxbUser, new DefaultHandler());
+            JAXBElement<Team> jaxbTeam = factory.createTeam(team);
+            marshaller.marshal(jaxbTeam, new DefaultHandler());
 
         } catch (MarshalException e) {
-            throw e;
+            System.out.print(e);
+            return e.getCause().getMessage().split(": ")[1];
         } catch (JAXBException | SAXException  e) {
             e.printStackTrace();
         }
-
+        return VALID;
     }
 }
