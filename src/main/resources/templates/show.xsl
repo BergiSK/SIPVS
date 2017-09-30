@@ -16,7 +16,7 @@
                 <link rel="stylesheet" type="text/css" media="all" href="../styles.css" />
             </head>
             <body>
-            <div class="row col s12 row body grey lighten-2">
+            <div class="row col s12 row body">
                 <h3 class="center" >Details</h3>
                 <h5>Team</h5>
 

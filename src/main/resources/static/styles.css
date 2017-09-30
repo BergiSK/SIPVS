@@ -16,6 +16,7 @@
     padding: 20px;
     margin-bottom: 50px;
     margin-top: 50px;
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
 }
 
 .validation-result{
@@ -39,4 +40,31 @@
 }
 .value{
     font-size: 1.2rem
+}
+
+.validationSection i {
+    font-size: 40px;
+}
+
+.validationSection .validBox {
+    color: #43A047 !important;
+    border-color: #43A047 !important;
+    border-style: solid;
+    display: inline-flex;
+}
+
+.validBox .messageBox  {
+    line-height: 40px;
+}
+
+.validationSection .invalidBox {
+    color: #E53935 !important;
+    border-color: #E53935 !important;
+    border-style: solid;
+    display: inline-flex;
+}
+
+.accentBanner {
+    height: 8px;
+    color: #26a69a;
 }

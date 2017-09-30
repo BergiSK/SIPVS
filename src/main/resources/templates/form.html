@@ -16,7 +16,7 @@
     <script th:src="@{/validations.js}"></script>
 </head>
 <body>
-    <div class="row body grey lighten-2">
+    <div class="row body">
         <h3 class="center" >Tournament registration</h3>
         <form class="col s12" action="#" th:action="@{/form}" th:object="${team}" method="post">
             <h5>Team</h5>
@@ -78,15 +78,15 @@
         <div class="row validationSection" th:switch="${validationResult}">
 
             <div th:case="Valid">
-                <div class="col s12  green darken-1 validation-result">
+                <div class="col s12 validBox validation-result">
                     <div class="left icon col s1">
-                        <i class="material-icons">check</i>
+                        <i class="material-icons">check_circle</i>
                     </div>
-                    <div class="icon messageBox col s11" th:text="${validationResult}"/>
+                    <div class="icon messageBox col s11" >XML is valid!</div>
                 </div>
             </div>
             <div th:case="*">
-                <div th:if="${validationResult != null}" class="col s12  red darken-1 validation-result">
+                <div th:if="${validationResult != null}" class="col s12 invalidBox validation-result">
                     <div class="left icon col s1">
                         <i class="material-icons">error</i>
                     </div>
@@ -94,14 +94,13 @@
                 </div>
             </div>
 
-            <div th:if="${saveResult != null}" class="col s12  green darken-1 validation-result">
+            <div th:if="${saveResult != null}" class="col s12 validBox validation-result">
                 <div class="left icon col s1">
-                    <i class="material-icons">check</i>
+                    <i class="material-icons">check_circle</i>
                 </div>
                 <div class="icon messageBox col s11" th:text="${saveResult}"/>
             </div>
         </div>
-
 
     </div>
 </body>
