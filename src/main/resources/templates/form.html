@@ -12,12 +12,12 @@
             src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js">
     </script>
-<link rel="stylesheet" type="text/css" media="all" th:href="@{/styles.css}" />
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/styles.css}" />
     <script th:src="@{/validations.js}"></script>
 </head>
 <body>
     <div class="row body grey lighten-2">
-        <h3 class="center" >Registrácia na turnaj</h3>
+        <h3 class="center" >Tournament registration</h3>
         <form class="col s12" action="#" th:action="@{/form}" th:object="${team}" method="post">
             <h5>Team</h5>
             <div class="row">
@@ -71,9 +71,9 @@
                     <label for="mail">e-mail</label>
                 </div>
             </div>
-            <button type="submit">Ulož</button>
-            <button type="submit" name="action" value="validate">Validuj</button>
-            <button type="submit" name="action" value="show">Zobraz</button>
+            <button class="waves-effect waves-light btn" type="submit"><i class="material-icons left">save</i>Save</button>
+            <button class="waves-effect waves-light btn" type="submit" name="action" value="validate"><i class="material-icons left">spellcheck</i>Validate</button>
+            <button class="waves-effect waves-light btn" type="submit" name="action" value="show"><i class="material-icons left">desktop_windows</i>Show</button>
         </form>
         <div class="row validationSection" th:switch="${validationResult}">
 

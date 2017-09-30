@@ -60,7 +60,7 @@
                 <xsl:apply-templates select="//sipvs:user"/>
                 <div class="row"></div>
                 <div class="row back">
-                    <button onclick="window.location.href='/form'">Back</button>
+                    <button class="waves-effect waves-light btn" onclick="window.location.href='/form'"><i class="material-icons left">arrow_back</i>Back</button>
                 </div>
             </div>
             </body>
