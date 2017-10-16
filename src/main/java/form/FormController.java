@@ -18,6 +18,8 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
 
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+
 @Controller
 public class FormController {
 
@@ -28,6 +30,21 @@ public class FormController {
     public void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
     }
+    @RequestMapping(value="/xml", method=GET)
+    @ResponseBody
+    public String getXml() {
+        return "XML FILE";
+    }
+    @RequestMapping(value="/xsd", method=GET)
+    @ResponseBody
+    public String getXsd() {
+        return "XSD FILE";
+    }
+    @RequestMapping(value="/xsl", method=GET)
+    @ResponseBody
+    public String getXsl() {
+        return "XSL FILE";
+    }
 
     @GetMapping("/form")
     public String getForm(Model model) {
@@ -35,7 +52,7 @@ public class FormController {
         team.setUser(new User());
         model.addAttribute("team", team);
         return "form";
-    }
+}
 
     @PostMapping("/form")
     public String formSubmit(@ModelAttribute Team team, Model model) throws MarshalException {

@@ -1,19 +1,35 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Getting Started: Handling Form Submission</title>
+    <title>Tournament registration</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel = "stylesheet"
-          href = "https://fonts.googleapis.com/icon?family=Material+Icons"></link>
-    <link rel = "stylesheet"
-          href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css"></link>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
+    <!--<link rel = "stylesheet"-->
+          <!--href = "https://fonts.googleapis.com/icon?family=Material+Icons"></link>-->
+    <!--<link rel = "stylesheet"-->
+          <!--href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css"></link>-->
+    <!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>-->
     <script type = "text/javascript"
             src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js">
-    </script>
+    <!--<script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js">-->
+    <!--</script>-->
+
+    <script type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/styles.css}" />
+    <script th:src="@{/sign.js}"></script>
     <script th:src="@{/validations.js}"></script>
+
+    <script th:inline="javascript">
+        function sign() {
+            var xml = httpGet('http://localhost:8080/xml');
+            var xsd = httpGet('http://localhost:8080/xsd');
+            var xsl = httpGet('http://localhost:8080/xxsl');
+            console.log(1);
+
+
+        }
+    </script>
+
+
 </head>
 <body>
     <div class="row body">
@@ -74,6 +90,7 @@
             <button class="waves-effect waves-light btn" type="submit"><i class="material-icons left">save</i>Save</button>
             <button class="waves-effect waves-light btn" type="submit" name="action" value="validate"><i class="material-icons left">spellcheck</i>Validate</button>
             <button class="waves-effect waves-light btn" type="submit" name="action" value="show"><i class="material-icons left">desktop_windows</i>Show</button>
+            <input id="clickMe" type="button" value="clickme" onclick="signTheForm();" />
         </form>
         <div class="row validationSection" th:switch="${validationResult}">
 
