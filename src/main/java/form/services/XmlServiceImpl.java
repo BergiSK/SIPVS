@@ -2,6 +2,7 @@ package form.services;
 
 import org.example.sipvs.ObjectFactory;
 import org.example.sipvs.Team;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -11,11 +12,19 @@ import javax.xml.bind.*;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import java.io.*;
+import java.nio.file.Files;
+import java.util.stream.Collectors;
 
 @Service
 public class XmlServiceImpl implements XmlService {
 
     private static final String VALID = "Valid";
+
+    private static final String XSD_PATH = "/static/Form.xsd";
+
+    private static final String XSL_PATH = "/templates/show.xsl";
+
+    private static final String XML_PATH = "c:/tempXml.xml";
 
     @Override
     public ByteArrayOutputStream getXmlStream(Team team) {
@@ -38,7 +47,7 @@ public class XmlServiceImpl implements XmlService {
     public void saveXml(Team team) {
         ByteArrayOutputStream xmlStream = this.getXmlStream(team);
 
-        try(OutputStream outputStream = new FileOutputStream("c:/tempXml.xml")) {
+        try(OutputStream outputStream = new FileOutputStream(XML_PATH)) {
             xmlStream.writeTo(outputStream);
         } catch (IOException e) {
             e.printStackTrace();
@@ -66,5 +75,35 @@ public class XmlServiceImpl implements XmlService {
             e.printStackTrace();
         }
         return VALID;
+    }
+
+    @Override
+    public String getXml() {
+        try {
+            return Files.lines(new File(XML_PATH).toPath()).collect(Collectors.joining("\n"));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public String getXsl() {
+        try {
+            return Files.lines(new ClassPathResource(XSL_PATH).getFile().toPath()).collect(Collectors.joining("\n"));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public String getXsd() {
+        try {
+            return Files.lines(new ClassPathResource(XSD_PATH).getFile().toPath()).collect(Collectors.joining("\n"));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

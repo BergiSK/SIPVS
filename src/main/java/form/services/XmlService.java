@@ -13,4 +13,10 @@ public interface XmlService {
 
     String isXmlValid(Team team) throws MarshalException;
 
+    String getXml();
+
+    String getXsl();
+
+    String getXsd();
+
 }

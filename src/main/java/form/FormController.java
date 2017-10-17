@@ -30,20 +30,23 @@ public class FormController {
     public void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
     }
+
     @RequestMapping(value="/xml", method=GET)
     @ResponseBody
     public String getXml() {
-        return "XML FILE";
+        return xmlService.getXml();
     }
+
     @RequestMapping(value="/xsd", method=GET)
     @ResponseBody
     public String getXsd() {
-        return "XSD FILE";
+        return xmlService.getXsd();
     }
+
     @RequestMapping(value="/xsl", method=GET)
     @ResponseBody
     public String getXsl() {
-        return "XSL FILE";
+        return xmlService.getXsl();
     }
 
     @GetMapping("/form")
