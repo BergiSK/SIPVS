@@ -1,6 +1,5 @@
 function signTheForm(){
     var xml = httpGet('http://localhost:8080/xml');
-    console.log(xml);
     var xsd = httpGet('http://localhost:8080/xsd');
     var xsl = httpGet('http://localhost:8080/xsl');
 
@@ -8,8 +7,8 @@ function signTheForm(){
     var oXMLPlugin = new ActiveXObject("DSig.XmlPluginAtl");
     var namespace = 'http://www.example.org/sipvs';
     var documentName = 'Registration form';
-    var xsdURI = "http://dis-major/dppo.xsd";
-    var xslURI = "http://dis-major/dppo.xslt";
+    var xsdURI = "http://sipvs.xsd";
+    var xslURI = "http://sipvs.xslt";
 
     var obj = oXMLPlugin.CreateObject('objectId', documentName, xml, xsd, namespace, xsdURI, xsl, xslURI);
     var addObj = oXML.AddObject(obj);
