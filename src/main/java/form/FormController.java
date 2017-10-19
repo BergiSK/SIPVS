@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.InputStream;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
 public class FormController {
@@ -29,6 +30,12 @@ public class FormController {
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
+    }
+
+    @RequestMapping(value="/saveSigned", method=POST)
+    @ResponseBody
+    public void saveSigned(@RequestBody String signedXml) {
+        xmlService.saveXml(signedXml);
     }
 
     @RequestMapping(value="/xml", method=GET)
@@ -64,13 +71,13 @@ public class FormController {
         return "/form";
     }
 
-    @RequestMapping(value="/form", method=RequestMethod.POST, params="action=validate")
+    @RequestMapping(value="/form", method= POST, params="action=validate")
     public String validate(@ModelAttribute Team team, Model model) throws MarshalException {
         String validationResult = xmlService.isXmlValid(team);
         model.addAttribute("validationResult", validationResult);
         return "form";
     }
-    @RequestMapping(value="/form", method=RequestMethod.POST, params="action=show")
+    @RequestMapping(value="/form", method= POST, params="action=show")
     public ModelAndView show(@ModelAttribute Team team) throws MarshalException {
         Source source = new StreamSource(new ByteArrayInputStream(xmlService.getXmlStream(team).toByteArray()));
         // adds the XML source file to the model so the XsltView can detect

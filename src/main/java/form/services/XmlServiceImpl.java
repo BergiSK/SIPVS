@@ -22,9 +22,11 @@ public class XmlServiceImpl implements XmlService {
 
     private static final String XSD_PATH = "/static/Form.xsd";
 
-    private static final String XSL_PATH = "/templates/show.xsl";
+    private static final String XSL_PATH = "/static/show.xsl";
 
     private static final String XML_PATH = "c:/tempXml.xml";
+
+    private static final String SIGNED_XML_PATH = "c:/tempSignedXml.xml";
 
     @Override
     public ByteArrayOutputStream getXmlStream(Team team) {
@@ -50,6 +52,15 @@ public class XmlServiceImpl implements XmlService {
         try(OutputStream outputStream = new FileOutputStream(XML_PATH)) {
             xmlStream.writeTo(outputStream);
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void saveXml(String signedXml) {
+        try (PrintStream out = new PrintStream(new FileOutputStream(SIGNED_XML_PATH))) {
+            out.print(signedXml);
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
