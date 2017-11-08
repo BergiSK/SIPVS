@@ -1,5 +1,15 @@
 package form;
 
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
+import java.io.ByteArrayInputStream;
+
+import javax.xml.bind.MarshalException;
+import javax.xml.transform.Source;
+import javax.xml.transform.stream.StreamSource;
+
+import org.apache.log4j.Logger;
 import org.example.sipvs.Team;
 import org.example.sipvs.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,22 +17,22 @@ import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
-import form.services.XmlService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.xml.bind.MarshalException;
-import javax.xml.transform.Source;
-import javax.xml.transform.stream.StreamSource;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.InputStream;
+import form.services.XmlService;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
 public class FormController {
+	
+	private static Logger log = Logger.getLogger(FormController.class);
 
     @Autowired
     private XmlService xmlService;
@@ -66,6 +76,7 @@ public class FormController {
 
     @PostMapping("/form")
     public String formSubmit(@ModelAttribute Team team, Model model) throws MarshalException {
+
         xmlService.saveXml(team);
         model.addAttribute("saveResult", "XML successfully saved!");
         return "/form";
