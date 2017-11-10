@@ -11,14 +11,5 @@ public interface XmlService {
 
     void saveXml(Team team);
 
-    void saveXml(String signedXml);
-
     String isXmlValid(Team team) throws MarshalException;
-
-    String getXml();
-
-    String getXsl();
-
-    String getXsd();
-
 }

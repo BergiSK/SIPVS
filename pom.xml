@@ -32,7 +32,12 @@
     		<groupId>org.bouncycastle</groupId>
     		<artifactId>bcpkix-jdk15on</artifactId>
     		<version>1.58</version>
-		</dependency>  
+		</dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.2</version>
+        </dependency>
     </dependencies>
 
     <properties>
@@ -84,6 +89,14 @@
                     <!-- The name of your generated source package -->
                     <arguments>-extension -npa -b ${project.basedir}/src/main/xsd/global.xjb</arguments>
                     
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>9</source>
+                    <target>9</target>
                 </configuration>
             </plugin>
         </plugins>
