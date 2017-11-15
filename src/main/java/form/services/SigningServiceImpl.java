@@ -22,6 +22,7 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.nio.file.Files;
 import java.util.Base64;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -86,9 +87,7 @@ public class SigningServiceImpl implements SigningService {
                 log.error("Can't find ds:SignatureValue tag!");
             }
 
-            byte request[] = adapter.createTSRequest(Base64.getEncoder()
-                    .encode(signatureValue.getTextContent().getBytes()));
-            String result = adapter.getTimeStampData(request);
+            String result = adapter.getTimeStampDataApacheApi(signatureValue.getTextContent().getBytes());
             TimeStampResponse response = adapter.getTSResponse(result);
 
             Node qualifyingProperties = document.getElementsByTagName("xades:QualifyingProperties").item(0);
@@ -97,7 +96,8 @@ public class SigningServiceImpl implements SigningService {
             }
 
             String timestampToken = new String(Base64.getEncoder().encode(response.getTimeStampToken().getEncoded()));
-            createXmlElements(document, timestampToken, qualifyingProperties);
+            createXmlElements(document, timestampToken, qualifyingProperties,
+                    UUID.randomUUID().toString().replace("-", ""));
             saveDomDocument(document);
         } catch (Exception e) {
             log.error(e.getMessage());
@@ -111,10 +111,11 @@ public class SigningServiceImpl implements SigningService {
         transformer.transform(source, output);
     }
 
-    private void createXmlElements(Document document, String timestampToken, Node qualifyingProperties) {
+    private void createXmlElements(Document document, String timestampToken, Node qualifyingProperties, String id) {
         Element unsignedProperties = document.createElement("xades:UnsignedProperties");
         Element unsignedSignatureProperties = document.createElement("xades:UnsignedSignatureProperties");
         Element signatureTimestamp = document.createElement("xades:SignatureTimeStamp");
+        signatureTimestamp.setAttribute("Id", id);
         Element encapsulatedTimeStamp = document.createElement("xades:EncapsulatedTimeStamp");
         unsignedProperties.appendChild(unsignedSignatureProperties);
         unsignedSignatureProperties.appendChild(signatureTimestamp);
