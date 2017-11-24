@@ -53,7 +53,7 @@ public class XmlServiceImpl implements XmlService {
             JAXBContext jaxbContext = JAXBContext.newInstance("org.example.sipvs",
                     ObjectFactory.class.getClassLoader());
             SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            Schema schema = schemaFactory.newSchema(new File("./src/main/xsd/Form.xsd"));
+            Schema schema = schemaFactory.newSchema(new File("./webapp/src/main/xsd/Form.xsd"));
 
             Marshaller marshaller = jaxbContext.createMarshaller();
             marshaller.setSchema(schema);
