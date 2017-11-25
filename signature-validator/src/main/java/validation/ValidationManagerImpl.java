@@ -4,10 +4,7 @@ import retrieve.RetrieveService;
 import retrieve.RetrieveServiceImpl;
 import validation.check.CheckingService;
 import validation.check.CheckingServiceImpl;
-import validation.check.checkers.SignatureChecker;
-import validation.check.checkers.TimeRangeChecker;
-import validation.check.checkers.TimeStampChecker;
-import validation.check.checkers.AlgorithmURIChecker;
+import validation.check.checkers.*;
 
 import java.io.File;
 import java.util.Arrays;
@@ -19,8 +16,8 @@ public class ValidationManagerImpl implements ValidationManager{
 
     private CheckingService checkingService = new CheckingServiceImpl();
 
-    private List<SignatureChecker> checkers =
-            Arrays.asList( new TimeRangeChecker(), new AlgorithmURIChecker(), new TimeStampChecker());
+    private List<Checker> checkers =
+            Arrays.asList(new TimeRangeChecker(), new AttributeChecker(), new TimeStampChecker(), new ElementContentChecker());
 
     @Override
     public void validate() {

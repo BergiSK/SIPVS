@@ -2,7 +2,7 @@ package validation.check.checkers;
 
 import java.io.File;
 
-public interface SignatureChecker {
+public interface Checker {
 
     boolean check(File file);
 }
