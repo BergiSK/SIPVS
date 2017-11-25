@@ -8,19 +8,11 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathFactory;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
 public class URIChecker implements SignatureChecker {
-
-    private static final List<String> algorithmElements =
-            Arrays.asList("ds:CanonicalizationMethod", "ds:SignatureMethod", "ds:DigestMethod", "ds:Transform");
-
-    private static final String signedInfo = "ds:SignedInfo";
 
     private static final String algorithmAttribute = "Algorithm";
 
@@ -44,21 +36,18 @@ public class URIChecker implements SignatureChecker {
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document document = builder.parse(file);
 
-            Element signedInfoElement = (Element) document.getElementsByTagName(signedInfo).item(0);
+            Element signatureMethod = (Element) XPathAPI.selectSingleNode(document.getDocumentElement(),
+                    "//SignedInfo/*[local-name() = 'SignatureMethod']");
+            Element canonicalizationMethod = (Element) XPathAPI.selectSingleNode(document.getDocumentElement(),
+                    "//SignedInfo/*[local-name() = 'CanonicalizationMethod']");
 
-            Element signatureMethod = (Element) signedInfoElement.getElementsByTagName("ds:SignatureMethod").item(0);
-            Element canonicalizationMethod = (Element) signedInfoElement.getElementsByTagName("ds:SignatureMethod").item(0);
-
-            XPath xPath = XPathFactory.newInstance().newXPath();
-//            NodeList transforms = (NodeList) xPath.evaluate("//ds:Signature/ds:SignedInfo/ds:Reference/ds:Transforms",
-//                    document, XPathConstants.NODESET);
-//            NodeList transforms =
-//                    (NodeList) xPath.compile("//ds:Signature/ds:SignedInfo/ds:Reference//ds:Transforms")
-//                            .evaluate(document, XPathConstants.NODESET);
             NodeList transforms =
-                    XPathAPI.selectNodeList(document.getDocumentElement(), "//ds:Signature/ds:SignedInfo/ds:Reference/ds:Transforms");
-            NodeList digestValues = (NodeList) xPath.compile("//ds:Signature/ds:SignedInfo/ds:Reference/ds:DigestMethod").evaluate(
-                    document, XPathConstants.NODESET);
+                    XPathAPI.selectNodeList(document.getDocumentElement(),
+                            "//SignedInfo/*[local-name() = 'Reference']/Transforms");
+
+            NodeList digestValues =
+                    XPathAPI.selectNodeList(document.getDocumentElement(),
+                            "//SignedInfo/*[local-name() = 'Reference']/DigestMethod");
 
             verifyElementAttributeValue(signatureMethod, algorithmAttribute, algoListSignature);
             verifyElementAttributeValue(canonicalizationMethod, algorithmAttribute, algoListCanonicalization);
