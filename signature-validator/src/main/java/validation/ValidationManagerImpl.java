@@ -16,8 +16,9 @@ public class ValidationManagerImpl implements ValidationManager{
 
     private CheckingService checkingService = new CheckingServiceImpl();
 
+
     private List<Checker> checkers =
-            Arrays.asList(new TimeRangeChecker(), new AttributeChecker(), new TimeStampChecker(), new ElementContentChecker());
+            Arrays.asList(new TimeRangeChecker(), new AttributeChecker(), new TimeStampChecker(), new ElementContentChecker(), new SignedInfoDigestValueChecker(), new ManifestDigestValueChecker());
 
     @Override
     public void validate() {

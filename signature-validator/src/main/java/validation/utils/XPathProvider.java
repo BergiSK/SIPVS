@@ -27,6 +27,7 @@ public class XPathProvider {
         return getXPath("DigestMethod");
     }
 
+
     public String getManifestTransformsPath() {
         return getXPath("ManifestTransforms");
     }
@@ -35,9 +36,15 @@ public class XPathProvider {
         return getXPath("ManifestDigestMethod");
     }
 
+    public String getReferencePath() {
+        return getXPath("Reference");
+    }
+
+
     public String getManifestPath() {
         return getXPath("Manifest");
     }
+
 
     public String getManifestReferencesPath() {
         return getXPath("ManifestReferences");
@@ -57,6 +64,8 @@ public class XPathProvider {
         xpathMap.put("DigestMethod", "//SignedInfo/*[local-name() = 'Reference']/DigestMethod");
         xpathMap.put("ManifestReferences", "//Object/Manifest/*[local-name() = 'Reference']");
         xpathMap.put("Manifest", "//Object/Manifest");
+        xpathMap.put("Reference", "//SignedInfo/*[local-name() = 'Reference']");
+
     }
 
 

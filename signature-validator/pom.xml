@@ -21,5 +21,10 @@
             <artifactId>xpathapi-jaxp</artifactId>
             <version>0.4</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.santuario</groupId>
+            <artifactId>xmlsec</artifactId>
+            <version>1.5.8</version>
+        </dependency>
     </dependencies>
 </project>

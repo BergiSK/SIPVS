@@ -14,12 +14,12 @@ public class DigestAlgNameProvider {
         DIGEST_ALGORITHM.put("http://www.w3.org/2001/04/xmldsig-more#sha384", "SHA-384");
     }
 
-        public String getNameByNamespace(String namespace){
+        public String getNameByURI(String uri){
             try{
-                return DIGEST_ALGORITHM.get(namespace);
+                return DIGEST_ALGORITHM.get(uri);
             }catch (EnumConstantNotPresentException e) {
-                System.out.println("ERROR: Not supported digest algorithm namespace: "  + namespace);
+                System.out.println("ERROR: Not supported digest algorithm URI: "  + uri);
             }
-            return "";
+            return null;
         }
 }
