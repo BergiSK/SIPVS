@@ -4,7 +4,7 @@ import it.svario.xpathapi.jaxp.XPathAPI;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import validation.check.DigestValueCheck;
+import validation.utils.DigestValueCheck;
 import validation.utils.XPathProvider;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;

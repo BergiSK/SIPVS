@@ -1,5 +1,6 @@
 package validation.utils;
 
+import org.apache.xml.security.c14n.Canonicalizer;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -80,5 +81,12 @@ public class CheckingUtils {
 
         return result.getWriter().toString();
 
+    }
+
+    public static byte[] canonicalizeElementbytes(byte[] nodeElementBytes, String transformValue) throws Exception{
+        byte[] canonicalizedElement = null;
+        Canonicalizer canonicalizer = Canonicalizer.getInstance(transformValue);
+        canonicalizedElement = canonicalizer.canonicalize(nodeElementBytes);
+        return canonicalizedElement;
     }
 }

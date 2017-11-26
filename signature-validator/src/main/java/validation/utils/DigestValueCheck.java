@@ -1,4 +1,4 @@
-package validation.check;
+package validation.utils;
 
 import it.svario.xpathapi.jaxp.XPathAPI;
 import org.w3c.dom.Document;
@@ -100,7 +100,7 @@ public class DigestValueCheck {
         if (CN14.equals(transformValue)) {
 
             try {
-                canonicalizedElement = canonicalizeElementbytes(nodeElementBytes, transformValue);
+                canonicalizedElement = CheckingUtils.canonicalizeElementbytes(nodeElementBytes, transformValue);
             } catch (Exception e) {
                 System.out.println("ERROR: Canonicalization failed");
                 return;
@@ -119,12 +119,7 @@ public class DigestValueCheck {
         }
 
     }
-    private byte[] canonicalizeElementbytes(byte[] nodeElementBytes, String transformValue) throws Exception{
-        byte[] canonicalizedElement = null;
-        Canonicalizer canonicalizer = Canonicalizer.getInstance(transformValue);
-        canonicalizedElement = canonicalizer.canonicalize(nodeElementBytes);
-        return canonicalizedElement;
-    }
+
 
     private MessageDigest getMessageDigest(String digestMethod){
         MessageDigest messageDigest = null;
