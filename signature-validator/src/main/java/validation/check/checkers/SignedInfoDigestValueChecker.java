@@ -12,7 +12,6 @@ import java.io.File;
 import org.apache.xml.security.c14n.Canonicalizer;
 
 public class SignedInfoDigestValueChecker implements Checker {
-    private static final String CN14 = "http://www.w3.org/TR/2001/REC-xml-c14n-20010315";
 
     static{
         Canonicalizer.registerDefaultAlgorithms();

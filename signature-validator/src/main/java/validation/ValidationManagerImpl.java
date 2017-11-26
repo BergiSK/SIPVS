@@ -20,7 +20,7 @@ public class ValidationManagerImpl implements ValidationManager{
     private List<Checker> checkers =
             Arrays.asList(new TimeRangeChecker(), new AttributeChecker(), new TimeStampChecker(),
                     new ElementContentChecker(), new SignedInfoDigestValueChecker(), new ManifestDigestValueChecker(),
-                    new SignatureValueChecker());
+                    new SignatureValueChecker(), new SignedInfoReferencesChecker());
 
     @Override
     public void validate() {
